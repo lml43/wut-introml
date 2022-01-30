@@ -175,17 +175,27 @@ att_maps = [
 },
 ]
 
-f = open("data/agaricus-lepiota.data", "r")
 
-global_input = []
+class Data:
+    @staticmethod
+    def load_data(file_name):
+        labels = []
+        features = []
 
-for x in f:
-    x = x.rstrip()
-    att_arr = x.split(',')
-    att_vec = []
-    for att_idx, att_name in enumerate(att_arr):
-        att_val = att_maps[att_idx][att_arr[att_idx]]
-        att_vec.append(att_val)
-    global_input.append(att_vec)
+        f = open(file_name, "r")
+
+        for x in f:
+            x = x.rstrip()
+            att_arr = x.split(',')
+            att_vec = []
+            for att_idx, att_name in enumerate(att_arr):
+                att_val = att_maps[att_idx][att_arr[att_idx]]
+                att_vec.append(att_val)
+
+            labels.append(att_vec[0])
+            features.append(att_vec[1:])
+
+        return labels, features
+
 
 print()
